@@ -12,6 +12,10 @@ $sql = "SELECT * FROM menu_items WHERE id = ?";
 
 $stmt = mysqli_prepare($conn, $sql);
 
+if (!$stmt) {
+    die("Failed to prepare statement.");
+}
+
 mysqli_stmt_bind_param($stmt, "i" ,$id);
 mysqli_stmt_execute($stmt);
 
@@ -38,6 +42,7 @@ else{
     
 }
 
+mysqli_stmt_close($stmt);
 header("Location: menu.php");
 exit();
 
