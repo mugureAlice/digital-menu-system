@@ -36,4 +36,28 @@ $stmt->execute([
 
 $order_id = $pdo->lastInsertId();
 
+foreach ($_SESSION['cart'] as $id => $item) {
+
+    $sql = "INSERT INTO order_items (order_id, menu_item_id, quantity, price)
+            VALUES (?, ?, ?, ?)";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->execute([
+        $order_id,
+        $id,
+        $item['qty'],
+        $item['price']
+    ]);
+
+}
+
+unset($_SESSION['cart']);
+
+header("Location: order_success.php");
+
+exit();
+
+
+
 ?>
