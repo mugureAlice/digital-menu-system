@@ -10,40 +10,26 @@ $id = intval( $_GET['id']);
 
 $sql = "SELECT * FROM menu_items WHERE id = ?";
 
-$stmt = mysqli_prepare($conn, $sql);
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$id]);
 
-if (!$stmt) {
-    die("Failed to prepare statement.");
-}
+$item = $stmt->fetch(PDO::FETCH_ASSOC);
 
-mysqli_stmt_bind_param($stmt, "i" ,$id);
-mysqli_stmt_execute($stmt);
 
-$result = mysqli_stmt_get_result($stmt);
-
-$item = mysqli_fetch_assoc($result);
-
-if(!$item){
+if (!$item) {
     die("Menu item not found");
-
 }
 
-
-if(isset($_SESSION['cart'][$id])){
+if (isset($_SESSION['cart'][$id])) {
     $_SESSION['cart'][$id]['qty']++;
-}
-else{
-    $_SESSION['cart'][$id] = array(
+} else {
+    $_SESSION['cart'][$id] = [
         "name" => $item['name'],
         "price" => $item['price'],
         "qty" => 1
-    );
-
-    
+    ];
 }
 
-mysqli_stmt_close($stmt);
 header("Location: menu.php");
 exit();
-
-?> 
+?>
