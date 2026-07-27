@@ -64,8 +64,10 @@ include '../header.php';
                     <td>KES <?= number_format($item['price'], 2); ?></td>
 
                     <td>
-                        <a href="menu_item_form.php?id=<?= $item['id']; ?>">Edit</a> |
-                        <a href="#">Delete</a>
+                   <a href="delete_menu_item.php?id=<?= $item['id']; ?>"
+                        onclick="return confirm('Are you sure you want to delete this item?');">
+                        Delete
+                   </a>
                     </td>
                 </tr>
 
