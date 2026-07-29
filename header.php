@@ -16,7 +16,7 @@
             <a href="/cart.php">Cart <?php if (!empty($_SESSION['cart'])): ?>(<?= array_sum(array_column($_SESSION['cart'], 'qty')) ?>)<?php endif; ?></a>
             <?php if (isAdmin()): ?>
                 <a href="/admin/dashboard.php">Admin Dashboard</a>
-                <a href="/admin/menu_items.php">Manage Menu</a>
+                <a href="/admin/menu_itemss.php">Manage Menu</a>
             <?php endif; ?>
             <span class="user-tag">Hi, <?= sanitize($_SESSION['name']) ?></span>
             <a href="/logout.php">Logout</a>

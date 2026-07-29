@@ -8,7 +8,7 @@ if(!isset($_GET['id'])){
 
 $id = intval( $_GET['id']);
 
-$sql = "SELECT * FROM menu_items WHERE id = ?";
+$sql = "SELECT * FROM menu_itemss WHERE id = ?";
 
 $stmt = mysqli_prepare($conn, $sql);
 

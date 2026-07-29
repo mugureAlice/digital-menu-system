@@ -1,9 +1,8 @@
 <?php
-// Database connection using PDO
 $DB_HOST = 'localhost';
 $DB_NAME = 'menu_kiosk';
-$DB_USER = 'root';       // change to your MySQL username
-$DB_PASS = '';           // change to your MySQL password
+$DB_USER = 'root';       
+$DB_PASS = '';           
 
 try {
     $pdo = new PDO(
