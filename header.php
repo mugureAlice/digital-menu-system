@@ -12,8 +12,8 @@
     <a href="/menu.php" class="brand">🍽️ Kiosk</a>
     <div class="nav-links">
         <?php if (isLoggedIn()): ?>
-            <a href="/menu.php">Menu</a>
-            <a href="/cart.php">Cart <?php if (!empty($_SESSION['cart'])): ?>(<?= array_sum(array_column($_SESSION['cart'], 'qty')) ?>)<?php endif; ?></a>
+            <a href="../menu.php">Menu</a>
+            <a href="../cart.php">Cart <?php if (!empty($_SESSION['cart'])): ?>(<?= array_sum(array_column($_SESSION['cart'], 'qty')) ?>)<?php endif; ?></a>
             <?php if (isAdmin()): ?>
                 <a href="/admin/dashboard.php">Admin Dashboard</a>
                 <a href="/admin/menu_itemss.php">Manage Menu</a>
