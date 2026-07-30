@@ -13,7 +13,7 @@ session_start();
  
 <?php
 if(empty($_SESSION['cart'])){
-    echo "Your cart is empty"
+    echo "Your cart is empty";
 }
 else{
     $total = 0;
