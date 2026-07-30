@@ -1,80 +1,122 @@
 <?php
 
-session_start();
+require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/functions.php';
 
-if (empty($_SESSION['cart']))
-{
-    header("Location: cart.php");
-    exit();
+
+if (empty($_SESSION['cart'])) {
+
+    header("Location: /digital-menu-system/cart.php");
+    exit;
+
 }
+
 
 $total = 0;
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Checkout</title>
-</head>
-<body>
+
+<?php require __DIR__ . '/header.php'; ?>
+
 
 <h2>Checkout</h2>
 
+
+<table border="1" cellpadding="10">
+
+<tr>
+    <th>Item</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Subtotal</th>
+</tr>
+
+
+<?php foreach ($_SESSION['cart'] as $item): ?>
+
 <?php
 
-echo "<table border='1' cellpadding='10'>";
+$subtotal = $item['price'] * $item['qty'];
 
-echo "<tr>";
-echo "<th>Item</th>";
-echo "<th>Price</th>";
-echo "<th>Quantity</th>";
-echo "<th>Subtotal</th>";
-echo "</tr>";
-
-foreach($_SESSION['cart'] as $item)
-{
-    $subtotal = $item['price'] * $item['qty'];
-    $total += $subtotal;
-
-    echo "<tr>";
-
-    echo "<td>".$item['name']."</td>";
-
-    echo "<td>Ksh ".$item['price']."</td>";
-
-    echo "<td>".$item['qty']."</td>";
-
-    echo "<td>Ksh ".$subtotal."</td>";
-
-    echo "</tr>";
-}
-
-echo "<tr>";
-
-echo "<td colspan='3'><strong>Total</strong></td>";
-
-echo "<td><strong>Ksh ".$total."</strong></td>";
-
-echo "</tr>";
-
-echo "</table>";
-
-echo "<br>";
+$total += $subtotal;
 
 ?>
 
-<form action="place_order.php" method="POST">
 
-    <label>Table Number</label><br><br>
+<tr>
 
-    <input type="number" name="table_number" min="1" required>
+    <td>
+        <?= sanitize($item['name']) ?>
+    </td>
+
+
+    <td>
+        Ksh <?= $item['price'] ?>
+    </td>
+
+
+    <td>
+        <?= $item['qty'] ?>
+    </td>
+
+
+    <td>
+        Ksh <?= $subtotal ?>
+    </td>
+
+</tr>
+
+
+<?php endforeach; ?>
+
+
+<tr>
+
+    <td colspan="3">
+        <strong>Total</strong>
+    </td>
+
+
+    <td>
+        <strong>Ksh <?= $total ?></strong>
+    </td>
+
+</tr>
+
+
+</table>
+
+
+<br>
+
+
+<form action="/digital-menu-system/place_order.php" method="POST">
+
+    <label>
+        Table Number
+    </label>
 
     <br><br>
 
-    <input type="submit" value="Place Order">
+
+    <input 
+        type="number" 
+        name="table_number" 
+        min="1" 
+        required
+    >
+
+
+    <br><br>
+
+
+    <input 
+        type="submit" 
+        value="Place Order"
+    >
 
 </form>
 
-</body>
-</html>
+
+<?php require __DIR__ . '/footer.php'; ?>

@@ -1,13 +1,24 @@
 <?php
-session_start();
-if(isset($_GET['id'])){
+
+require_once __DIR__ . '/includes/auth.php';
+
+
+if (isset($_GET['id'])) {
+
     $id = intval($_GET['id']);
-    
-    is(isset($_SESSION['cart'][&id])){
+
+
+    if (isset($_SESSION['cart'][$id])) {
+
         unset($_SESSION['cart'][$id]);
+
     }
+
 }
 
-header("Location: cart.php");
-exit();
+
+header("Location: /digital-menu-system/cart.php");
+
+exit;
+
 ?>
