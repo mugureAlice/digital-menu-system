@@ -3,7 +3,9 @@ require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/config/db.php';
 
-if (isLoggedIn()) redirect('/menu.php');
+if (isLoggedIn()) {
+    redirect('/digital-menu-system/menu.php');
+}
 
 $error = '';
 
@@ -18,22 +20,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
+
         if ($stmt->fetch()) {
             $error = 'Email already registered.';
         } else {
             $hash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+
+            $stmt = $pdo->prepare(
+                "INSERT INTO users (name, email, password, role)
+                 VALUES (?, ?, ?, ?)"
+            );
+
             $stmt->execute([$name, $email, $hash, $role]);
-            redirect('/login.php');
+
+            redirect('/digital-menu-system/login.php');
         }
     }
 }
 
 require __DIR__ . '/header.php';
 ?>
+
 <h2>Create an Account</h2>
-<?php if ($error): ?><p class="alert"><?= $error ?></p><?php endif; ?>
+
+<?php if ($error): ?>
+    <p class="alert"><?= $error ?></p>
+<?php endif; ?>
+
 <form method="POST" class="form-card">
+
     <label>Name</label>
     <input type="text" name="name" required>
 
@@ -50,6 +65,12 @@ require __DIR__ . '/header.php';
     </select>
 
     <button type="submit">Register</button>
+
 </form>
-<p>Already have an account? <a href="/login.php">Login here</a></p>
+
+<p>
+    Already have an account?
+    <a href="/digital-menu-system/login.php">Login here</a>
+</p>
+
 <?php require __DIR__ . '/footer.php'; ?>
