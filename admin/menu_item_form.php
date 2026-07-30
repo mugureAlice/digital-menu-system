@@ -63,6 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $newImage = handleImageUpload('image');
 
+    
+
 
 
     if ($id) {
